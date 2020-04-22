@@ -21,10 +21,10 @@
                             <a class = "btn btn-danger btn-sm mt-1 mb-1 " href="{% url 'post-delete' object.id %}">Delete</a>
                         </div>
                     {% endif %}
-<hr>
+                    <hr>
                     {% for comment in post.comments.all %}
                         <div class="comment">
-                            <div class="date">{{ comment.created_date }}</div>
+                            <div class="date">{{ comment.date_posted |date:"d F, Y" }}</div>
                             <strong>{{ comment.author }}</strong>
                             <p>{{ comment.content|linebreaks }}</p>
                         </div>

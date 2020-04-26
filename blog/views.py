@@ -1,8 +1,15 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Post
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Post, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.decorators import login_required
+from django.views.generic import (
+                            ListView, DetailView,
+                            CreateView, UpdateView,
+                            DeleteView
+                        )
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from .forms import CommentForm
 def home(request):
     context = {
         'posts' : Post.objects.all()
@@ -25,8 +32,6 @@ class UserPostListView(ListView):
     def get_queryset(self):
         user = get_object_or_404(User, username = self.kwargs.get('username'))
         return Post.objects.filter(author = user).order_by('-date_posted')
-
-
 
 class PostDetailView(DetailView):
     model = Post
@@ -63,5 +68,22 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
+
 def about(request):
     return render(request, 'blog/about.html', { 'title': 'about'})
+
+@login_required
+def add_comment(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        form.instance.author = request.user
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('post-detail', pk=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/add_comment.html', {'form': form})

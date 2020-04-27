@@ -1,6 +1,9 @@
 {% extends 'blog/base.html'%}
 {% block content %}
-<h1 class = "mb-3">Posts by {{ view.kwargs.username}} ({{ page_obj.paginator.count }})</h1>
+
+        <h3 class = "mb-3">Posts by {{ view.kwargs.username}}
+            <span class="badge badge-primary badge-pill">{{ page_obj.paginator.count }}</span>
+        </h3>
         {% for post in posts %}
             <article class="media content-section">
                 <img class ="rounded-circle article-img" src=" {{ post.author.profile.image.url }}" alt="">
@@ -12,7 +15,7 @@
                         <small class="text-muted">{{ post.date_posted |date:"d F, Y" }}</small>
                     </div>
                     <p class="article-content">{{ post.content | truncatechars:255}} <a href="{% url 'post-detail' post.id %}">(read more)</a></p>
-                    
+
                     <a href="{% url 'post-detail' post.id %}">Comments: <span class="badge badge-primary badge-pill">{{ post.comments.count }}</span></a>
                 </div>
 

@@ -78,17 +78,18 @@
             <div class="col-md-4">
                 {% if user.is_authenticated %}
                     <div class="content-section">
-                        <h3>Profile:</h3>
-                        <img class="rounded-circle account-img " style="margin-left:90px;" src="{{user.profile.image.url}}" alt="profile-pic">
+                        <img class="rounded-circle account-img "  src="{{user.profile.image.url}}" alt="profile-pic">
                         <div class="media-body" style="text-align:center">
+
                             <a href="{% url 'user-posts' user %}">
-                                <h3 class="account-heading" style="text-align:center;">{{ user.username }} </h3>
+                                <h3 class="account-heading">{{ user.username }} </h3>
                             </a>
                         </div>
                         <div id="link-container">
                             <a href="{% url 'profile' %}" id="link">view profile</a>
                         </div>
-                        <p class="text-secondary">Email : {{ user.email }}</p>
+
+                        <p class="text-secondary">Email: {{ user.email }}</p>
                     </div>
                 {% endif %}
 

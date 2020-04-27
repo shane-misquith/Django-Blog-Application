@@ -10,6 +10,7 @@ from django.views.generic import (
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import CommentForm
+from django.core.paginator import Paginator
 def home(request):
     context = {
         'posts' : Post.objects.all()
@@ -41,6 +42,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     fields = ['title', 'content']
 
     def form_valid(self, form):
+
         form.instance.author = self.request.user
         return super().form_valid(form)
 

@@ -12,8 +12,12 @@
                         <small class="text-muted">{{ post.date_posted |date:"d F, Y" }}</small>
                     </div>
                     <p class="article-content">{{ post.content | truncatechars:255}} <a href="{% url 'post-detail' post.id %}">(read more)</a></p>
+                    
+                    <a href="{% url 'post-detail' post.id %}">Comments: <span class="badge badge-primary badge-pill">{{ post.comments.count }}</span></a>
                 </div>
+
             </article>
+
         {% endfor %}
 
         {% if is_paginated %}

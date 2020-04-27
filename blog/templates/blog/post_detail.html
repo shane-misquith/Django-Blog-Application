@@ -23,7 +23,12 @@
         <hr>
         <div class="row">
             <div class="col-md-9">
-                <h3>Comments: {{ post.comments.count }}</h3>
+            <!-- <ul class="list-group"> -->
+              <p>Comments:
+                  <span class="badge badge-primary badge-pill">{{ post.comments.count }}</span>
+              </p>
+
+                <!-- <h3>Comments: {{ post.comments.count }}</h3> -->
             </div>
             <div class="col-md-3">
                 {% if user.is_authenticated %}

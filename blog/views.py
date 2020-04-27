@@ -69,11 +69,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-
-
-def about(request):
-    return render(request, 'blog/about.html', { 'title': 'about'})
-
 @login_required
 def add_comment(request, pk):
     post = get_object_or_404(Post, pk=pk)
